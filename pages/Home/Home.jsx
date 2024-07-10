@@ -5,13 +5,13 @@ export function Home(){
     return(
         <>
           <View style={s.basic}>
-            <Text>Basic Weather Info</Text>
+            <Text style={s.txt}>Basic Weather Info</Text>
           </View>
           <View style={s.searchbar}>
-            <Text>SearchBar</Text>
+            <Text style={s.txt}>SearchBar</Text>
           </View>
           <View style={s.advanced}>
-            <Text>Advanced Weather Info</Text>
+            <Text style={s.txt}>Advanced Weather Info</Text>
           </View>
         </>
     );

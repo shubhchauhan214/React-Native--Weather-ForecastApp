@@ -6,5 +6,9 @@ export const s = StyleSheet.create({
     },
     img_background:{
         flex: 1,
-    }
+        backgroundColor:"black",
+    },
+    img:{
+      opacity: 0.5,  
+    },
 });
