@@ -51,17 +51,11 @@ export default function App() {
     }
   }
 
-
-  console.log(coordinates);
-  console.log(weather);
-
-
-
   return( 
     <ImageBackground imageStyle={s.img} style={s.img_background} source={backgroundImg}>
      <SafeAreaProvider>
          <SafeAreaView style={s.container}>
-            {isFontLoaded ? <Home /> : null}
+            {isFontLoaded && weather && <Home weather={weather} />}
          </SafeAreaView>
      </SafeAreaProvider>
     </ImageBackground>
