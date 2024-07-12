@@ -2,12 +2,24 @@ import { s } from "./App.style"; /* firstly made a App.style.js file and import 
 /* very important and first work of App.js file is to import SafeAreaProvider and SafeAreaView*/
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Home } from "./pages/Home/Home";
+import {Forecasts} from "./pages/Forecasts/Forecasts";
 import { ImageBackground } from "react-native"; /*we have to set image in background,isi vjha se ye krre h*/
 import backgroundImg from "./assets/background.png"; /*the image we want to set in background,imported here*/
 import { useEffect, useState } from "react";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from "expo-location";
 import { MeteoAPI } from "./api/meteo";
 import { useFonts } from "expo-font";
+import {NavigationContainer} from  "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
+
+const navTheme={
+  colors:{
+    background: "transparent",
+  },
+
+}
 
 export default function App() {
   const[coordinates, setCoordinates] = useState();
@@ -59,13 +71,24 @@ export default function App() {
   }
 
   return( 
+    <NavigationContainer theme={navTheme}>
     <ImageBackground imageStyle={s.img} style={s.img_background} source={backgroundImg}>
      <SafeAreaProvider>
          <SafeAreaView style={s.container}>
-            {isFontLoaded && weather && <Home city={city} weather={weather} />}
+            {isFontLoaded && weather && (
+            <Stack.Navigator
+               screenOptions={{headerShown: false, animation:"fade"}} 
+               initialRouteName="Home">
+               <Stack.Screen name="Home">
+                  {()=> <Home city={city} weather={weather}/>}
+                </Stack.Screen>
+               <Stack.Screen name="Forecasts" component={Forecasts}/>          
+            </Stack.Navigator>
+            )}
          </SafeAreaView>
      </SafeAreaProvider>
     </ImageBackground>
+    </NavigationContainer>
   );
 }
 
