@@ -3,7 +3,7 @@ import { s } from "./App.style"; /* firstly made a App.style.js file and import 
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Home } from "./pages/Home/Home";
 import {Forecasts} from "./pages/Forecasts/Forecasts";
-import { ImageBackground } from "react-native"; /*we have to set image in background,isi vjha se ye krre h*/
+import { ImageBackground, Alert } from "react-native"; /*we have to set image in background,isi vjha se ye krre h*/
 import backgroundImg from "./assets/background.png"; /*the image we want to set in background,imported here*/
 import { useEffect, useState } from "react";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from "expo-location";
@@ -55,6 +55,15 @@ export default function App() {
     setCity(cityResponse);
   }
 
+  async function fetchCoordsByCity(city){
+    try{
+    const coordsResponse = await MeteoAPI.fetchCoordsByCity(city);
+    setCoordinates(coordsResponse);
+    }catch(err){
+      Alert.alert("Ouch!", err);
+    }
+  }
+
 
   /* Request for getting user coordinates*/
   async function getUserCoordinates(){
@@ -80,7 +89,7 @@ export default function App() {
                screenOptions={{headerShown: false, animation:"fade"}} 
                initialRouteName="Home">
                <Stack.Screen name="Home">
-                  {()=> <Home city={city} weather={weather}/>}
+                  {()=> <Home city={city} weather={weather} onSubmitSearch={fetchCoordsByCity}/>}
                 </Stack.Screen>
                <Stack.Screen name="Forecasts" component={Forecasts}/>          
             </Stack.Navigator>
